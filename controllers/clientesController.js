@@ -1,16 +1,20 @@
 import { db } from "../db/conexion.js";
 
+
 // Obtener todos los clientes
-const getClientes = async (req, res) => {
+// Obtener todos los clientes
+const getClientes = async (_req, res) => {
     try {
         const sql = `SELECT * FROM clientes`;
+        console.log("Query SQL:", sql); // Registrar la consulta SQL
         const result = await db.query(sql);
-        return res.json(result.rows);
+        return res.json(result);
     } catch (error) {
         console.error("Error al obtener clientes:", error);
         return res.status(500).json({ message: "Error interno del servidor" });
     }
 };
+
 
 // Obtener un cliente por su ID
 const getClientesId = async (req, res) => {
@@ -18,12 +22,14 @@ const getClientesId = async (req, res) => {
         const { id } = req.params;
         const sql = `SELECT * FROM clientes WHERE id = $1`;
         const result = await db.query(sql, [id]);
-        return res.json(result.rows);
+        return res.json(result);
     } catch (error) {
         console.error("Error al obtener cliente por ID:", error);
         return res.status(500).json({ message: "Error interno del servidor" });
     }
 };
+
+
 
 // Crear un nuevo cliente
 const postClientes = async (req, res) => {
