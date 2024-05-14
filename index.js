@@ -13,6 +13,7 @@ app.use('/', (req, res) => {
 
 // Rutas para clientes
 app.use('/clientes', cliente);
+app.post('/clientes', cliente);
 
 // Puerto de escucha
 const PORT = process.env.PORT || 3000;

@@ -1,19 +1,18 @@
 // conexion.js
 
-import pg from 'pg-promise';
+import pg from 'pg-promise'
 const pgp = pg();
 
-import { configDotenv } from 'dotenv';
-
-configDotenv();
-
-const user_db= process.env.user_db;
-const user_pass= process.env.user_pass;
-const host= process.env.host;
-const database= process.env.database;
-
-const cnstr = `postgresql://${user_db}:${user_pass}@${host}:5432/${database}`;
+const cnstr = `postgresql://postgres:l0renzana@localhost:5432/postgres`;
 
 const db = pgp(cnstr);
 
-export { db }; // Asegúrate de exportar correctamente el objeto db
+db.connect()
+.then( ()=>{
+    console.log("Conexion de Base de Datos exitosa");
+} )
+.catch((err)=>{
+    console.log(`Error de conexion ${err}`)
+})
+
+export { db }
