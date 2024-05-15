@@ -2,12 +2,16 @@
 import express from 'express';
 const app = express();
 import cliente from './routes/clientesRoute.js';
+import entrenadoresRoute from './routes/entrenadoresRoute.js';
+import membresia from './routes/membresiasRoute.js';
 
 // Middleware para el manejo de datos JSON
 app.use(express.json());
 
 // Rutas para clientes
 app.use('/clientes', cliente);
+app.use('/entrenadores', entrenadoresRoute); // Usa las rutas de entrenadores
+app.use('/membresias', membresia);
 
 // Ruta principal - Redirige todas las solicitudes a las rutas de clientes
 app.use('/', (req, res, next) => {
