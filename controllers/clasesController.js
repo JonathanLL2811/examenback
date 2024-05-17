@@ -1,7 +1,7 @@
 
 import { db } from "../db/conexion.js";
 
-// Obtener todas las clases
+
 const getClases = async (req, res) => {
     try {
         const sql = `SELECT * FROM clases`;
@@ -13,7 +13,7 @@ const getClases = async (req, res) => {
     }
 };
 
-// Obtener una clase por su ID
+
 const getClaseById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -26,7 +26,7 @@ const getClaseById = async (req, res) => {
     }
 };
 
-// Crear una nueva clase
+
 const postClase = async (req, res) => {
     try {
         const { nombre, horario, duracion, entrenador_id } = req.body;

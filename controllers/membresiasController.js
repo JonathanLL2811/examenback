@@ -1,10 +1,10 @@
 import { db } from "../db/conexion.js";
 
-// Obtener todas las membresías
+
 const getMembresias = async (_req, res) => {
     try {
         const sql = `SELECT * FROM membresias`;
-        console.log("Query SQL:", sql); // Registrar la consulta SQL
+        console.log("Query SQL:", sql); 
         const result = await db.query(sql);
         return res.json(result);
     } catch (error) {
@@ -13,7 +13,7 @@ const getMembresias = async (_req, res) => {
     }
 };
 
-// Crear una nueva membresía
+
 const postMembresia = async (req, res) => {
     try {
         const { nombre, precio, duracion } = req.body;

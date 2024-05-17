@@ -1,4 +1,4 @@
-// conexion.js
+// desde aqui me conecto
 
 import pg from 'pg-promise'
 const pgp = pg();

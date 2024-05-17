@@ -1,6 +1,6 @@
 import { db } from "../db/conexion.js";
 
-// Obtener todos los entrenadores
+
 const getEntrenadores = async (req, res) => {
     try {
         const sql = `SELECT * FROM entrenadores`;
@@ -12,7 +12,7 @@ const getEntrenadores = async (req, res) => {
     }
 };
 
-// Crear un nuevo entrenador
+
 const postEntrenador = async (req, res) => {
     try {
         const { nombre, especialidad, correo } = req.body;

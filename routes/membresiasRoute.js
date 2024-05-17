@@ -4,10 +4,10 @@ import { getMembresias, postMembresia } from '../controllers/membresiasControlle
 
 // Rutas para la gestión de membresías
 
-// Obtener todas las membresías
+
 router.get('/', getMembresias);
 
-// Crear una nueva membresía
+
 router.post('/', postMembresia);
 
 export default router;

@@ -1,10 +1,10 @@
 import { db } from "../db/conexion.js";
 
-// Obtener todos los clientes
+
 const getClientes = async (_req, res) => {
     try {
         const sql = `SELECT * FROM clientes`;
-        console.log("Query SQL:", sql); // Registrar la consulta SQL
+        console.log("Query SQL:", sql); 
         const result = await db.query(sql);
         return res.json(result);
     } catch (error) {
@@ -14,7 +14,6 @@ const getClientes = async (_req, res) => {
 };
 
 
-// Obtener un cliente por su ID
 const getClientesId = async (req, res) => {
     try {
         const { id } = req.params;
@@ -29,7 +28,7 @@ const getClientesId = async (req, res) => {
 
 
 
-// Crear un nuevo cliente
+
 const postClientes = async (req, res) => {
     try {
         const { nombre, correo, edad } = req.body;
@@ -42,7 +41,7 @@ const postClientes = async (req, res) => {
     }
 };
 
-// Actualizar un cliente por su ID
+
 const putClientes = async (req, res) => {
     try {
         const { id } = req.params;
@@ -56,7 +55,6 @@ const putClientes = async (req, res) => {
     }
 };
 
-// Eliminar un cliente por su ID
 const deleteClientes = async (req, res) => {
     try {
         const { id } = req.params;
