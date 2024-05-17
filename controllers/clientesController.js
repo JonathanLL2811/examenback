@@ -1,7 +1,5 @@
 import { db } from "../db/conexion.js";
 
-
-// Obtener todos los clientes
 // Obtener todos los clientes
 const getClientes = async (_req, res) => {
     try {

@@ -4,6 +4,7 @@ const app = express();
 import cliente from './routes/clientesRoute.js';
 import entrenadoresRoute from './routes/entrenadoresRoute.js';
 import membresia from './routes/membresiasRoute.js';
+import clases from './routes/clasesRoute.js';
 
 // Middleware para el manejo de datos JSON
 app.use(express.json());
@@ -12,6 +13,7 @@ app.use(express.json());
 app.use('/clientes', cliente);
 app.use('/entrenadores', entrenadoresRoute); // Usa las rutas de entrenadores
 app.use('/membresias', membresia);
+app.use('/clases', clases);
 
 // Ruta principal - Redirige todas las solicitudes a las rutas de clientes
 app.use('/', (req, res, next) => {
