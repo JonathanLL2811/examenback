@@ -1,16 +1,17 @@
-// index.js
-
 import express from 'express';
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import pg from 'pg';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 // Configuración de conexión a PostgreSQL
 const pool = new pg.Pool({
-  connectionString: `postgresql://postgres:l0renzana@localhost:5432/postgres`
+  connectionString: `postgresql://${process.env.PG_USER}:${process.env.PG_PASSWORD}@${process.env.PG_HOST}:${process.env.PG_PORT}/${process.env.PG_DATABASE}`,
 });
 
 // Middleware para manejar JSON y CORS
@@ -22,6 +23,37 @@ app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
 });
+
+// Ruta para crear un nuevo administrador
+app.post('/api/administradores', async (req, res) => {
+  const { nombre, correo, contraseña } = req.body;
+
+  try {
+    // Verificar si el administrador ya existe
+    const existingAdmin = await pool.query('SELECT * FROM administradores WHERE correo = $1', [correo]);
+    if (existingAdmin.rows.length > 0) {
+      return res.status(400).json({ message: 'El administrador ya existe' });
+    }
+
+    // Si no existe, cifrar la contraseña
+    const hashedPassword = bcrypt.hashSync(contraseña, 10);
+
+    // Insertar el nuevo administrador en la base de datos
+    const result = await pool.query(
+      'INSERT INTO administradores (nombre, correo, contraseña) VALUES ($1, $2, $3) RETURNING *',
+      [nombre, correo, hashedPassword]
+    );
+
+    const newAdmin = result.rows[0];
+    res.status(201).json(newAdmin);
+  } catch (error) {
+    console.error('Error al crear administrador:', error);
+    res.status(500).json({ message: 'Error interno' });
+  }
+});
+
+
+
 
 // Ruta para el login de administradores
 app.post('/api/login', async (req, res) => {
@@ -35,7 +67,7 @@ app.post('/api/login', async (req, res) => {
       return res.status(401).json({ message: 'Credenciales inválidas' });
     }
 
-    const token = jwt.sign({ id: admin.id }, 'jwt_secret_key', { expiresIn: '1h' });
+    const token = jwt.sign({ id: admin.id }, process.env.JWT_SECRET, { expiresIn: '1h' });
     res.json({ token });
   } catch (error) {
     console.error('Error en login:', error);
@@ -52,7 +84,7 @@ function authenticateToken(req, res, next) {
     return res.sendStatus(401);
   }
 
-  jwt.verify(token, 'jwt_secret_key', (err, user) => {
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
       return res.sendStatus(403);
     }
