@@ -3,6 +3,8 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import pg from 'pg';
 import dotenv from 'dotenv';
+import cors from 'cors'; // Importa el middleware cors
+
 
 dotenv.config();
 
@@ -17,6 +19,9 @@ const pool = new pg.Pool({
 // Middleware para manejar JSON y CORS
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(cors()); // Habilita CORS para todas las rutas
+
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
@@ -94,7 +99,7 @@ function authenticateToken(req, res, next) {
 }
 
 // Ruta protegida para crear un cliente
-app.post('/api/clientes', authenticateToken, async (req, res) => {
+app.post('/api/clientes', async (req, res) => {
   const { nombre, edad, correo } = req.body;
 
   try {
@@ -107,7 +112,7 @@ app.post('/api/clientes', authenticateToken, async (req, res) => {
 });
 
 // Ruta protegida para crear un entrenador
-app.post('/api/entrenadores', authenticateToken, async (req, res) => {
+app.post('/api/entrenadores', async (req, res) => {
   const { nombre, especialidad, correo } = req.body;
 
   try {
@@ -120,7 +125,7 @@ app.post('/api/entrenadores', authenticateToken, async (req, res) => {
 });
 
 // Ruta protegida para crear una clase
-app.post('/api/clases', authenticateToken, async (req, res) => {
+app.post('/api/clases', async (req, res) => {
   const { nombre, horario, duracion, entrenador_id } = req.body;
 
   try {
@@ -133,7 +138,7 @@ app.post('/api/clases', authenticateToken, async (req, res) => {
 });
 
 // Ruta protegida para crear una membresía
-app.post('/api/membresias', authenticateToken, async (req, res) => {
+app.post('/api/membresias', async (req, res) => {
   const { nombre, precio, duracion } = req.body;
 
   try {
