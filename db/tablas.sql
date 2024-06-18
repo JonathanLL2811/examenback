@@ -1,4 +1,4 @@
--- Active: 1718027958406@@127.0.0.1@5432@postgres
+-- Active: 1717892304154@@127.0.0.1@5432@postgres
 CREATE TABLE clientes (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100),

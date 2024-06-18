@@ -5,7 +5,6 @@ import pg from 'pg';
 import dotenv from 'dotenv';
 import cors from 'cors'; // Importa el middleware cors
 
-
 dotenv.config();
 
 const app = express();
@@ -57,8 +56,16 @@ app.post('/api/administradores', async (req, res) => {
   }
 });
 
-
-
+// Ruta para obtener todos los administradores
+app.get('/api/administradores', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM administradores');
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error al obtener administradores:', error);
+    res.status(500).json({ message: 'Error interno' });
+  }
+});
 
 // Ruta para el login de administradores
 app.post('/api/login', async (req, res) => {
@@ -111,6 +118,17 @@ app.post('/api/clientes', async (req, res) => {
   }
 });
 
+// Ruta para obtener todos los clientes
+app.get('/api/clientes', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM clientes');
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error al obtener clientes:', error);
+    res.status(500).json({ message: 'Error interno' });
+  }
+});
+
 // Ruta protegida para crear un entrenador
 app.post('/api/entrenadores', async (req, res) => {
   const { nombre, especialidad, correo } = req.body;
@@ -120,6 +138,17 @@ app.post('/api/entrenadores', async (req, res) => {
     res.json(result.rows[0]);
   } catch (error) {
     console.error('Error al crear entrenador:', error);
+    res.status(500).json({ message: 'Error interno' });
+  }
+});
+
+// Ruta para obtener todos los entrenadores
+app.get('/api/entrenadores', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM entrenadores');
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error al obtener entrenadores:', error);
     res.status(500).json({ message: 'Error interno' });
   }
 });
@@ -137,6 +166,17 @@ app.post('/api/clases', async (req, res) => {
   }
 });
 
+// Ruta para obtener todas las clases
+app.get('/api/clases', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM clases');
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error al obtener clases:', error);
+    res.status(500).json({ message: 'Error interno' });
+  }
+});
+
 // Ruta protegida para crear una membresía
 app.post('/api/membresias', async (req, res) => {
   const { nombre, precio, duracion } = req.body;
@@ -146,6 +186,17 @@ app.post('/api/membresias', async (req, res) => {
     res.json(result.rows[0]);
   } catch (error) {
     console.error('Error al crear membresía:', error);
+    res.status(500).json({ message: 'Error interno' });
+  }
+});
+
+// Ruta para obtener todas las membresías
+app.get('/api/membresias', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM membresias');
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error al obtener membresías:', error);
     res.status(500).json({ message: 'Error interno' });
   }
 });
