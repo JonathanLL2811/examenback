@@ -31,5 +31,5 @@ CREATE TABLE administradores (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100),
     correo VARCHAR(100) UNIQUE,
-    contraseña VARCHAR(100) -- Aquí se almacenará el hash de la contraseña
+    contraseña VARCHAR(100) 
 );
